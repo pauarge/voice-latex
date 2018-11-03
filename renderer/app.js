@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/update', (req, res) => {
+    io.emit('update', 'asdf');
     res.json({'status': 'ok'});
 });
 
