@@ -1,4 +1,5 @@
-from pylatex import Math
+from pylatex import Math, Matrix
+import numpy as np
 
 
 def draw_integral(doc, data):
@@ -10,4 +11,5 @@ def draw_derivative(doc, data):
 
 
 def draw_matrix(doc, data):
-    raise NotImplementedError
+    M = np.matrix(data['numbers']).reshape([data['n'], data['m']])
+    doc.append(Math(data=[Matrix(M)]))
