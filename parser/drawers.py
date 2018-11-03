@@ -1,6 +1,8 @@
 from pylatex import Math, Matrix, NoEscape
 import numpy as np
-from sympy import latex, Integral, Symbol
+from sympy import latex, Integral
+
+from parser.Polynomial import Polynomial
 
 
 def draw_polynomial(doc, data):
@@ -8,8 +10,9 @@ def draw_polynomial(doc, data):
 
 
 def draw_integral(doc, data):
-    x = Symbol(data['function'])
-    equation = Integral(x, (x, data['lower_bound'], data['upper_bound']))
+    poly = Polynomial(data['function'])
+    eq, sym = poly.parse()
+    equation = Integral(eq, (sym, data['lower_bound'], data['upper_bound']))
     doc.append(NoEscape(latex(equation)))
 
 
