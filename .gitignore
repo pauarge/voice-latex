@@ -109,3 +109,6 @@ venv.bak/
 # Generated files
 *.tex
 *.pdf
+*.fls
+*fdb_latexmk
+*.aux
