@@ -25,7 +25,9 @@ class Polynomial:
         variable = Symbol(groups[2])
         power = groups[3]
 
-        if factor:
+        if factor and operation == 'times':
             return factor * self.generate_without_factor(variable, power), variable
+        elif factor and operation == 'divided':
+            return factor / self.generate_without_factor(variable, power), variable
         else:
             return self.generate_without_factor(variable, power), variable
