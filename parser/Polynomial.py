@@ -10,17 +10,19 @@ class Polynomial:
 
         try:
             n = int(s[0])
-        except ValueError:
-            n = None
-
-        if n:
             x = Symbol(s[1])
-        else:
-            x = Symbol(s[0])
+            if len(s) == 2:
+                return n * x, x
+            elif s[2] == 'squared':
+                return n * x ** 2, x
+            elif s[2] == 'cubed':
+                return n * x ** 3, x
 
-        if len(s) == 1:
-            return x, x
-        elif s[1] == 'squared':
-            return x ** 2, x
-        elif s[1] == 'cubed':
-            return x ** 3, x
+        except ValueError:
+            x = Symbol(s[0])
+            if len(s) == 1:
+                return x, x
+            elif s[1] == 'squared':
+                return x ** 2, x
+            elif s[1] == 'cubed':
+                return x ** 3, x

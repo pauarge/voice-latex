@@ -8,20 +8,19 @@ OUT_PATH = '../renderer/public/generated'
 
 
 def main():
-    geometry_options = {"tmargin": "1cm", "lmargin": "10cm"}
-    doc = Document(geometry_options=geometry_options)
-
-    # data = {
-    #     'function': 'x squared'
-    # }
-    # draw_polynomial(doc, data)
+    doc = Document()
 
     data = {
-        'upper_bound': 1,
-        'lower_bound': 2,
-        'function': 'x squared'
+        'function': '2 x squared'
     }
-    draw_integral(doc, data)
+    draw_polynomial(doc, data)
+
+    # data = {
+    #     'upper_bound': 1,
+    #     'lower_bound': 2,
+    #     'function': 'x squared'
+    # }
+    # draw_integral(doc, data)
 
     # data = {
     #     'n': 3,
