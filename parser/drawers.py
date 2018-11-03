@@ -8,7 +8,7 @@ from parser.Polynomial import Polynomial
 def draw_polynomial(data):
     poly = Polynomial(data['function'])
     eq, sym = poly.parse()
-    return NoEscape(latex(eq))
+    return NoEscape('\\[{}\\]'.format(latex(eq)))
 
 
 def draw_integral(data):
