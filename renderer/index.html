@@ -1,45 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Latex renderer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 </head>
+
 <body>
-    <canvas id="the-canvas" style="border:1px  solid black"></canvas>
-    <script>
-        var socket = io();
-        var url = '/static/generated.pdf';
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <canvas id="the-canvas" style="border:1px  solid black"></canvas>
+        </div>
+        <div class="col-md" id="tex-container"></div>
+    </div>
+</div>
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
+<script>
+    const socket = io();
+    const url = '/static/generated.pdf';
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 
 
-        function getPageHelloWorld(page) {
-            var scale = 1.5;
-            var viewport = page.getViewport(scale);
-            //
-            // Prepare canvas using PDF page dimensions
-            //
-            var canvas = document.getElementById('the-canvas');
-            var context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            //
-            // Render PDF page into canvas context
-            //
-            var renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            page.render(renderContext);
-        }
-
+    function getPageHelloWorld(page) {
+        const scale = 1.5;
+        const viewport = page.getViewport(scale);
         //
-        // Asynchronous download PDF
+        // Prepare canvas using PDF page dimensions
         //
-        pdfjsLib.getDocument(url).then(function getPdfHelloWorld(pdf) {
-            pdf.getPage(1).then(getPageHelloWorld);
-        });
-    </script>
+        const canvas = document.getElementById('the-canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        //
+        // Render PDF page into canvas context
+        //
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+        page.render(renderContext);
+    }
+
+    //
+    // Asynchronous download PDF
+    //
+    pdfjsLib.getDocument(url).then(function getPdfHelloWorld(pdf) {
+        pdf.getPage(1).then(getPageHelloWorld);
+    });
+
+    socket.on('update', (data) => {
+        document.getElementById("tex-container").innerHTML=data;
+    });
+</script>
 </body>
 </html>
