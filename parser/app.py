@@ -2,7 +2,7 @@ from pylatex import Document
 
 from parser.drawers import draw_integral
 
-OUT_PATH = '../out/generated'
+OUT_PATH = '../renderer/public/generated'
 
 
 def main():
