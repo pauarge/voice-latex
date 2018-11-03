@@ -36,6 +36,9 @@ class Polynomial:
 
         res = parsed_groups[0]
         for i in range(1, len(groups)):
-            res = res + parsed_groups[i]
+            if groups[i-1][-1] == 'plus':
+                res = res + parsed_groups[i]
+            else:
+                res = res - parsed_groups[i]
 
         return res, variable
