@@ -11,16 +11,16 @@ def main():
     doc = Document()
 
     data = {
-        'function': '2 x squared'
+        'function': '2 times x squared'
     }
     draw_polynomial(doc, data)
 
-    # data = {
-    #     'upper_bound': 1,
-    #     'lower_bound': 2,
-    #     'function': 'x squared'
-    # }
-    # draw_integral(doc, data)
+    data = {
+        'upper_bound': 1,
+        'lower_bound': 2,
+        'function': 'x squared'
+    }
+    draw_integral(doc, data)
 
     # data = {
     #     'n': 3,
@@ -30,7 +30,7 @@ def main():
     # draw_matrix(doc, data)
 
     doc.generate_pdf(OUT_PATH, clean_tex=False)
-    requests.get(RENDERER_URL).json()
+    # requests.get(RENDERER_URL).json()
 
 
 if __name__ == '__main__':

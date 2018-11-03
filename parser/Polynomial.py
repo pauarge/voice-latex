@@ -1,28 +1,31 @@
 from sympy import Symbol
+import re
+
+expr = r'([0-9]+)?(?:\s)?(times|divided)?(?:\s)?([a-zA-Z]+)(?:\s)?(squared|cubed)?'
 
 
 class Polynomial:
     def __init__(self, raw):
         self.raw = raw.lower()
 
+    def generate_without_factor(self, variable, power):
+        if power == 'squared':
+            return variable ** 2
+        elif power == 'cubed':
+            return variable ** 3
+        else:
+            return variable
+
     def parse(self):
-        s = self.raw.split(' ')
+        p = re.compile(expr)
+        groups = p.search(self.raw).groups()
 
-        try:
-            n = int(s[0])
-            x = Symbol(s[1])
-            if len(s) == 2:
-                return n * x, x
-            elif s[2] == 'squared':
-                return n * x ** 2, x
-            elif s[2] == 'cubed':
-                return n * x ** 3, x
+        factor = int(groups[0]) if groups[0] else None
+        operation = groups[1]
+        variable = Symbol(groups[2])
+        power = groups[3]
 
-        except ValueError:
-            x = Symbol(s[0])
-            if len(s) == 1:
-                return x, x
-            elif s[1] == 'squared':
-                return x ** 2, x
-            elif s[1] == 'cubed':
-                return x ** 3, x
+        if factor:
+            return factor * self.generate_without_factor(variable, power), variable
+        else:
+            return self.generate_without_factor(variable, power), variable
