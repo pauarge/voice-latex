@@ -22,12 +22,12 @@ def main():
     }
     draw_integral(doc, data)
 
-    # data = {
-    #     'n': 3,
-    #     'm': 2,
-    #     'numbers': [1, 2, 3, 4, 5, 6]
-    # }
-    # draw_matrix(doc, data)
+    data = {
+        'n': 3,
+        'm': 2,
+        'numbers': [1, 2, 3, 4, 5, 6]
+    }
+    draw_matrix(doc, data)
 
     doc.generate_pdf(OUT_PATH, clean_tex=False)
     # requests.get(RENDERER_URL).json()

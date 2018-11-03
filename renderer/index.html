@@ -24,7 +24,6 @@
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.js';
 
-
     function getPageHelloWorld(page) {
         const scale = 1.5;
         const viewport = page.getViewport(scale);
@@ -45,14 +44,10 @@
         page.render(renderContext);
     }
 
-    //
-    // Asynchronous download PDF
-    //
-    pdfjsLib.getDocument(url).then(function getPdfHelloWorld(pdf) {
-        pdf.getPage(1).then(getPageHelloWorld);
-    });
-
     socket.on('update', (data) => {
+        pdfjsLib.getDocument(url).then(function getPdfHelloWorld(pdf) {
+            pdf.getPage(1).then(getPageHelloWorld);
+        });
         document.getElementById("tex-container").innerHTML=data;
     });
 </script>

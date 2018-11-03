@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -11,7 +12,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/update', (req, res) => {
-    io.emit('update', 'asdf');
+    fs.readFile('./public/generated.tex', 'utf8', (err, contents) => {
+        io.emit('update', contents);
+    });
     res.json({'status': 'ok'});
 });
 
