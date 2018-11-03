@@ -15,7 +15,7 @@ def draw_integral(data):
     poly = Polynomial(data['function'])
     eq, sym = poly.parse()
     equation = Integral(eq, (sym, data['lower_bound'], data['upper_bound']))
-    return NoEscape('\[{}\]'.format(latex(equation)))
+    return NoEscape('\\[{}\\]'.format(latex(equation)))
 
 
 def draw_derivative(data):
