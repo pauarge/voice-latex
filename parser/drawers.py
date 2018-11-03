@@ -2,6 +2,10 @@ from pylatex import Math, Matrix
 import numpy as np
 
 
+def draw_polynomial(doc, data):
+    raise NotImplementedError
+
+
 def draw_integral(doc, data):
     doc.append(Math(data=['2*3', '=', 9]))
 
