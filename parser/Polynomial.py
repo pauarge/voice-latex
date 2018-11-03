@@ -6,11 +6,21 @@ class Polynomial:
         self.raw = raw.lower()
 
     def parse(self):
-        splitted = self.raw.split(' ')
-        x = Symbol(splitted[0])
-        if len(splitted) == 1:
+        s = self.raw.split(' ')
+
+        try:
+            n = int(s[0])
+        except ValueError:
+            n = None
+
+        if n:
+            x = Symbol(s[1])
+        else:
+            x = Symbol(s[0])
+
+        if len(s) == 1:
             return x, x
-        elif splitted[1] == 'squared':
+        elif s[1] == 'squared':
             return x ** 2, x
-        elif splitted[1] == 'cubed':
+        elif s[1] == 'cubed':
             return x ** 3, x

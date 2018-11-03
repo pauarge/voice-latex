@@ -1,7 +1,7 @@
 from pylatex import Document
 import requests
 
-from parser.drawers import draw_integral, draw_matrix
+from parser.drawers import draw_polynomial, draw_integral, draw_matrix
 
 RENDERER_URL = 'http://127.0.0.1:3000/update'
 OUT_PATH = '../renderer/public/generated'
@@ -10,6 +10,11 @@ OUT_PATH = '../renderer/public/generated'
 def main():
     geometry_options = {"tmargin": "1cm", "lmargin": "10cm"}
     doc = Document(geometry_options=geometry_options)
+
+    # data = {
+    #     'function': 'x squared'
+    # }
+    # draw_polynomial(doc, data)
 
     data = {
         'upper_bound': 1,

@@ -6,7 +6,9 @@ from parser.Polynomial import Polynomial
 
 
 def draw_polynomial(doc, data):
-    raise NotImplementedError
+    poly = Polynomial(data['function'])
+    eq, sym = poly.parse()
+    doc.append(NoEscape(latex(eq)))
 
 
 def draw_integral(doc, data):
