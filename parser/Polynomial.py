@@ -1,7 +1,7 @@
 from sympy import Symbol
 import re
 
-expr = r'([0-9]+)?(?:\s)?(times|divided)?(?:\s)?([a-zA-Z]+)(?:\s)?(squared|cubed)?'
+expr = r'([0-9]+)?(?:\s)?(times|divided)?(?:\s)?([a-zA-Z]+)(?:\s)?(squared|cubed)?(plus|minus)?'
 
 
 class Polynomial:

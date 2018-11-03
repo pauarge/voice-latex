@@ -21,7 +21,7 @@ def draw_integral(data):
 def draw_derivative(data):
     poly = Polynomial(data['function'])
     eq, _ = poly.parse()
-    return NoEscape('\\[\\frac{{d}}{{dt}} {}\\]'.format(latex(eq)))
+    return NoEscape('\\[\\frac{{d}}{{d{}}} {}\\]'.format(data['wrt'], latex(eq)))
 
 
 def draw_matrix(data):
