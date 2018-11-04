@@ -1,5 +1,5 @@
 from flask import Flask, request
-from pylatex import Document, NewLine, Command
+from pylatex import Document, NewLine, Command, TikZ, Axis, Plot
 import requests
 
 from parser.Polynomial import Polynomial
@@ -45,6 +45,11 @@ def draw():
             commands.append(draw_integral(data, f.parse()))
         elif op == 'derivate':
             commands.append(draw_derivative(data, f.parse()))
+        elif op == 'plot':
+            with doc.create(TikZ()):
+                plot_options = 'height=10cm, width=10cm'
+                with doc.create(Axis(options=plot_options)) as plot:
+                    plot.append(Plot(func=f.toPlot()))
         else:
             commands.append(draw_polynomial(f.parse()))
 

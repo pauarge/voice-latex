@@ -13,3 +13,11 @@ class Polynomial:
             k = k - 1
             res = res + self.coefs[i] * x ** k
         return res
+
+    def toPlot(self):
+        k = len(self.coefs) - 1
+        res = '{}*x^{}'.format(self.coefs[0], k)
+        for i in range(1, len(self.coefs)):
+            k = k - 1
+            res = '{} + {}*x^{}'.format(res, self.coefs[i], k)
+        return res
