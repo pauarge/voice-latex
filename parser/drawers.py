@@ -9,16 +9,19 @@ def draw_polynomial(data):
 
 def draw_integral(data, fn, render=True):
     x = Symbol('x')
-    equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
     if render:
+        equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
         return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(latex(equation)))
     else:
-        return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(equation))
+        return NoEscape('\\begin{{equation}}\int_{{{}}}^{{{}}} {} dx\\end{{equation}}'.format(data.get('lower_bound'),
+                                                                                              data.get('upper_bound'),
+                                                                                              fn))
 
 
 def draw_derivative(data, fn, render=True):
     if render:
-        return NoEscape('\\begin{{equation}}\\frac{{d}}{{d{}}} ({})\\end{{equation}}'.format(data.get('wrt'), latex(fn)))
+        return NoEscape(
+            '\\begin{{equation}}\\frac{{d}}{{d{}}} ({})\\end{{equation}}'.format(data.get('wrt'), latex(fn)))
     else:
         return NoEscape('\\begin{{equation}}\\frac{{d}}{{d{}}} {}\\end{{equation}}'.format(data.get('wrt'), fn))
 
