@@ -1,6 +1,6 @@
 from pylatex import Math, Matrix, NoEscape
 import numpy as np
-from sympy import latex, Integral, Derivative, Symbol
+from sympy import latex, Integral
 
 from parser.Polynomial import Polynomial
 
@@ -26,4 +26,9 @@ def draw_derivative(data):
 
 def draw_matrix(data):
     M = np.matrix(data['numbers']).reshape([data['n'], data['m']])
+    return Math(data=[Matrix(M)])
+
+
+def draw_random_matrix(data):
+    M = np.random.randint(5, size=(data['n'], data['m']))
     return Math(data=[Matrix(M)])
