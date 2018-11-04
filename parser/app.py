@@ -49,14 +49,14 @@ def draw():
             commands.append(draw_polynomial(f.parse()))
 
     elif intentname == 'trigfunc':
-        f = Trig(data.get('trigfunc'), data.get('var'))
+        f = Trig(data.get('trigfunc'), data.get('var'), data.get('auxoper'))
         op = data.get('operation')
         if op == 'integral':
             commands.append(draw_integral(data, f.parse(), render=False))
         elif op == 'derivate':
             commands.append(draw_derivative(data, f.parse(), render=False))
         else:
-            commands.append(draw_trig(data))
+            commands.append(draw_trig(f.parse()))
 
     try:
         for c in commands:

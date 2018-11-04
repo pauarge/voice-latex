@@ -4,14 +4,14 @@ from sympy import latex, Integral, Symbol
 
 
 def draw_polynomial(data):
-    return NoEscape('\\begin{{equation}}{} = 0\\end{{equation}'.format(latex(data)))
+    return NoEscape('\\begin{{equation}}{} = 0\\end{{equation}}'.format(latex(data)))
 
 
 def draw_integral(data, fn, render=True):
     x = Symbol('x')
     if render:
         equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
-        return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(latex(equation)))
+        return NoEscape('\\begin{{equation}}{}\\end{{equation}}'.format(latex(equation)))
     else:
         return NoEscape('\\begin{{equation}}\int_{{{}}}^{{{}}} {} dx\\end{{equation}}'.format(data.get('lower_bound'),
                                                                                               data.get('upper_bound'),
@@ -54,4 +54,4 @@ def draw_inverse_matrix(data):
 
 
 def draw_trig(data):
-    return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(data))
+    return NoEscape('\\begin{{equation}}{}\\end{{equation}}'.format(data))
