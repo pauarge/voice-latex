@@ -1,5 +1,5 @@
 from flask import Flask, request
-from pylatex import Document, NewLine, Command
+from pylatex import Document, NewLine, Command, NoEscape
 import requests
 
 from parser.drawers import draw_polynomial, draw_integral, draw_matrix, draw_derivative
@@ -18,9 +18,11 @@ def draw():
     doc = Document()
     doc.append(Command('fontsize', arguments=['15', '12']))
     doc.append(Command('selectfont'))
+    doc.append(NoEscape('Voice-generated \LaTeX'))
+    doc.append(NewLine())
 
     user, intentname = data['intent']['intentName'].split(':')
-    slots = data['slots']
+    slots = data.get('slots')
 
     if intentname == 'integral':
         lower_bound = None
@@ -28,11 +30,11 @@ def draw():
         fun = None
 
         for slot in slots:
-            if slot['slotName'] == 'function':
-                fun = slot['rawValue']
-            elif slot['slotName'] == 'lower_bound':
+            if slot.get('slotName') == 'function':
+                fun = slot.get('rawValue')
+            elif slot.get('slotName') == 'lower_bound':
                 lower_bound = int(slot['value']['value'])
-            elif slot['slotName'] == 'upper_bound':
+            elif slot.get('slotName') == 'upper_bound':
                 upper_bound = int(slot['value']['value'])
 
         data = {
@@ -47,9 +49,9 @@ def draw():
         wrt = None
 
         for slot in slots:
-            if slot['slotName'] == 'function':
+            if slot.get('slotName') == 'function':
                 fun = slot['rawValue']
-            elif slot['slotName'] == 'wrt':
+            elif slot.get('slotName') == 'wrt':
                 wrt = slot['rawValue']
 
         data = {
@@ -59,6 +61,14 @@ def draw():
         commands.append(draw_derivative(data))
 
     elif intentname == 'matrix':
+        m_data = {
+            'n': data.get('first_dim'),
+            'm': data.get('second_dim'),
+            'numbers': data.get('vals'),
+        }
+        commands.append(draw_matrix(m_data))
+
+    elif intentname == 'polynomial':
         pass
 
     try:
@@ -70,7 +80,11 @@ def draw():
     except Exception as e:
         print(e)
 
-    # requests.get(RENDERER_URL).json()
+    try:
+        requests.get(RENDERER_URL).json()
+    except:
+        pass
+
     return "ok"
 
 
