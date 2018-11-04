@@ -14,7 +14,7 @@ def draw_integral(data, fn, render=True):
             equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
             return NoEscape('\\begin{{equation}}{}\\end{{equation}}'.format(latex(equation)))
         else:
-            return NoEscape('\\begin{{equation}}int {} dx\\end{{equation}}'.format(latex(fn)))
+            return NoEscape('\\begin{{equation}}\int {} dx\\end{{equation}}'.format(latex(fn)))
     else:
         if data.get('lower_bound') and data.get('upper_bound'):
             return NoEscape(
