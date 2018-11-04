@@ -42,16 +42,9 @@ def draw():
         f = Polynomial(data.get('coef'))
         op = data.get('operation')
         if op == 'integral':
-            commands.append(draw_integral({
-                'upper_bound': data.get('upper_bound'),
-                'lower_bound': data.get('lower_bound'),
-                'function': f.parse()
-            }))
+            commands.append(draw_integral(data, f.parse()))
         elif op == 'derivate':
-            commands.append(draw_derivative({
-                'wrt': data.get('wrt'),
-                'function': f.parse(),
-            }))
+            commands.append(draw_derivative(data, f.parse()))
         else:
             commands.append(draw_polynomial(f.parse()))
 
@@ -59,16 +52,9 @@ def draw():
         f = Trig(data.get('trigfunc'), data.get('var'))
         op = data.get('operation')
         if op == 'integral':
-            commands.append(draw_integral({
-                'upper_bound': data.get('upper_bound'),
-                'lower_bound': data.get('lower_bound'),
-                'function': f.parse()
-            }, render=False))
+            commands.append(draw_integral(data, f.parse(), render=False))
         elif op == 'derivate':
-            commands.append(draw_derivative({
-                'wrt': data.get('wrt'),
-                'function': f.parse(),
-            }))
+            commands.append(draw_derivative(data, f.parse, render=False))
         else:
             commands.append(draw_trig(data))
 
