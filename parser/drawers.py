@@ -4,23 +4,23 @@ from sympy import latex, Integral, Symbol
 
 
 def draw_polynomial(data):
-    return NoEscape('\\[{} = 0\\]'.format(latex(data)))
+    return NoEscape('\\begin{{equation}}{} = 0\\end{{equation}'.format(latex(data)))
 
 
 def draw_integral(data, fn, render=True):
     x = Symbol('x')
     equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
     if render:
-        return NoEscape('\\[{}\\]'.format(latex(equation)))
+        return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(latex(equation)))
     else:
-        return NoEscape('\\[{}\\]'.format(equation))
+        return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(equation))
 
 
 def draw_derivative(data, fn, render=True):
     if render:
-        return NoEscape('\\[\\frac{{d}}{{d{}}} ({})\\]'.format(data.get('wrt'), latex(fn)))
+        return NoEscape('\\begin{{equation}}\\frac{{d}}{{d{}}} ({})\\end{{equation}}'.format(data.get('wrt'), latex(fn)))
     else:
-        return NoEscape('\\[\\frac{{d}}{{d{}}} {}\\]'.format(data.get('wrt'), fn))
+        return NoEscape('\\begin{{equation}}\\frac{{d}}{{d{}}} {}\\end{{equation}}'.format(data.get('wrt'), fn))
 
 
 def draw_matrix(data):
@@ -34,4 +34,4 @@ def draw_random_matrix(data):
 
 
 def draw_trig(data):
-    return NoEscape('\\[{}\\]'.format(data))
+    return NoEscape('\\begin{{equation}}{}\\end{{equation}'.format(data))
