@@ -3,7 +3,8 @@ from pylatex import Document, NewLine, Command, NoEscape
 import requests
 
 from parser.Polynomial import Polynomial
-from parser.drawers import draw_polynomial, draw_integral, draw_matrix, draw_derivative, draw_random_matrix
+from parser.Trig import Trig
+from parser.drawers import draw_polynomial, draw_integral, draw_matrix, draw_derivative, draw_random_matrix, draw_trig
 
 RENDERER_URL = 'http://127.0.0.1:3000/update'
 OUT_PATH = '../renderer/public/generated'
@@ -53,6 +54,23 @@ def draw():
             }))
         else:
             commands.append(draw_polynomial(f.parse()))
+
+    elif intentname == 'trigfunc':
+        f = Trig(data.get('trigfunc'), data.get('var'))
+        op = data.get('operation')
+        if op == 'integral':
+            commands.append(draw_integral({
+                'upper_bound': data.get('upper_bound'),
+                'lower_bound': data.get('lower_bound'),
+                'function': f.parse()
+            }, render=False))
+        elif op == 'derivate':
+            commands.append(draw_derivative({
+                'wrt': data.get('wrt'),
+                'function': f.parse(),
+            }))
+        else:
+            commands.append(draw_trig(data))
 
     try:
         for c in commands:
