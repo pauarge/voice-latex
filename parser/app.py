@@ -1,5 +1,5 @@
 from flask import Flask, request
-from pylatex import Document, NewLine, Command, NoEscape
+from pylatex import Document, NewLine, Command
 import requests
 
 from parser.Polynomial import Polynomial
@@ -54,7 +54,7 @@ def draw():
         if op == 'integral':
             commands.append(draw_integral(data, f.parse(), render=False))
         elif op == 'derivate':
-            commands.append(draw_derivative(data, f.parse, render=False))
+            commands.append(draw_derivative(data, f.parse(), render=False))
         else:
             commands.append(draw_trig(data))
 
