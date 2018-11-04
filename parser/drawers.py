@@ -6,9 +6,13 @@ from parser.Polynomial import Polynomial
 
 
 def draw_polynomial(data):
-    poly = Polynomial(data['function'])
-    eq, sym = poly.parse()
-    return NoEscape('\\[{}\\]'.format(latex(eq)))
+    coefs = data['coefs']
+    k = len(coefs) - 1
+    res = coefs[0] ** (k)
+    for i in range(1, len(coefs) - 1):
+        k = k - 1
+        res = res + coefs[i] ** k
+    return NoEscape('\\[{}\\]'.format(latex(res)))
 
 
 def draw_integral(data):
@@ -30,5 +34,5 @@ def draw_matrix(data):
 
 
 def draw_random_matrix(data):
-    M = np.random.randint(5, size=(data['n'], data['m']))
+    M = np.random.randint(1, 99, size=(data['n'], data['m']))
     return Math(data=[Matrix(M)])
