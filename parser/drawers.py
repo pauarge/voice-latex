@@ -27,13 +27,30 @@ def draw_derivative(data, fn, render=True):
 
 
 def draw_matrix(data):
-    M = np.matrix(data['numbers']).reshape([data['n'], data['m']])
+    M = np.matrix(data['vals']).reshape([data['first_dim'], data['second_dim']])
     return Math(data=[Matrix(M)])
+
+
+def draw_multiply_matrix(data):
+    M1 = np.matrix(data['vals']).reshape([data.get('first_dim'), data.get('second_dim')])
+    M2 = np.random.randint(1, 99, size=(data.get('second_dim'), data.get('third_dim')))
+    return Math(data=[Matrix(M1), Matrix(M2), '=', Matrix(M1.dot(M2))])
 
 
 def draw_random_matrix(data):
-    M = np.random.randint(1, 99, size=(data['n'], data['m']))
+    M = np.random.randint(1, 99, size=(data.get('first_dim'), data.get('second_dim')))
     return Math(data=[Matrix(M)])
+
+
+def draw_random_multiply_matrix(data):
+    M1 = np.random.randint(1, 99, size=(data.get('first_dim'), data.get('second_dim')))
+    M2 = np.random.randint(1, 99, size=(data.get('second_dim'), data.get('third_dim')))
+    return Math(data=[Matrix(M1), Matrix(M2), '=', Matrix(M1.dot(M2))])
+
+
+def draw_inverse_matrix(data):
+    M = np.matrix(data['vals']).reshape([data['first_dim'], data['second_dim']])
+    return Math(data=['inv', Matrix(M), '=', Matrix(np.linalg.pinv(M))])
 
 
 def draw_trig(data):
