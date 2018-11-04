@@ -1,31 +1,20 @@
 from pylatex import Math, Matrix, NoEscape
 import numpy as np
-from sympy import latex, Integral
-
-from parser.Polynomial import Polynomial
+from sympy import latex, Integral, Symbol
 
 
 def draw_polynomial(data):
-    coefs = data['coefs']
-    k = len(coefs) - 1
-    res = coefs[0] ** (k)
-    for i in range(1, len(coefs) - 1):
-        k = k - 1
-        res = res + coefs[i] ** k
-    return NoEscape('\\[{}\\]'.format(latex(res)))
+    return NoEscape('\\[{}\\]'.format(latex(data)))
 
 
 def draw_integral(data):
-    poly = Polynomial(data['function'])
-    eq, sym = poly.parse()
-    equation = Integral(eq, (sym, data['lower_bound'], data['upper_bound']))
+    x = Symbol('x')
+    equation = Integral(data['function'], (x, data['lower_bound'], data['upper_bound']))
     return NoEscape('\\[{}\\]'.format(latex(equation)))
 
 
 def draw_derivative(data):
-    poly = Polynomial(data['function'])
-    eq, _ = poly.parse()
-    return NoEscape('\\[\\frac{{d}}{{d{}}} {}\\]'.format(data['wrt'], latex(eq)))
+    return NoEscape('\\[\\frac{{d}}{{d{}}} ({})\\]'.format(data['wrt'], latex(data['function'])))
 
 
 def draw_matrix(data):

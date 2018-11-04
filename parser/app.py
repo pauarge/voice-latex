@@ -2,6 +2,7 @@ from flask import Flask, request
 from pylatex import Document, NewLine, Command, NoEscape
 import requests
 
+from parser.Polynomial import Polynomial
 from parser.drawers import draw_polynomial, draw_integral, draw_matrix, draw_derivative, draw_random_matrix
 
 RENDERER_URL = 'http://127.0.0.1:3000/update'
@@ -20,45 +21,8 @@ def draw():
     doc.append(Command('selectfont'))
 
     user, intentname = data['intent']['intentName'].split(':')
-    slots = data.get('slots')
 
-    if intentname == 'integral':
-        lower_bound = None
-        upper_bound = None
-        fun = None
-
-        for slot in slots:
-            if slot.get('slotName') == 'function':
-                fun = slot.get('rawValue')
-            elif slot.get('slotName') == 'lower_bound':
-                lower_bound = int(slot['value']['value'])
-            elif slot.get('slotName') == 'upper_bound':
-                upper_bound = int(slot['value']['value'])
-
-        data = {
-            'upper_bound': upper_bound,
-            'lower_bound': lower_bound,
-            'function': fun
-        }
-        commands.append(draw_integral(data))
-
-    elif intentname == 'derivate':
-        fun = None
-        wrt = None
-
-        for slot in slots:
-            if slot.get('slotName') == 'function':
-                fun = slot['rawValue']
-            elif slot.get('slotName') == 'wrt':
-                wrt = slot['rawValue']
-
-        data = {
-            'wrt': wrt,
-            'function': fun
-        }
-        commands.append(draw_derivative(data))
-
-    elif intentname == 'matrix':
+    if intentname == 'matrix':
         m_data = {
             'n': data.get('first_dim'),
             'm': data.get('second_dim'),
@@ -74,7 +38,21 @@ def draw():
         commands.append(draw_random_matrix(m_data))
 
     elif intentname == 'polynomial':
-        pass
+        f = Polynomial(data.get('coef'))
+        op = data.get('operation')
+        if op == 'integral':
+            commands.append(draw_integral({
+                'upper_bound': data.get('upper_bound'),
+                'lower_bound': data.get('lower_bound'),
+                'function': f.parse()
+            }))
+        elif op == 'derivate':
+            commands.append(draw_derivative({
+                'wrt': data.get('wrt'),
+                'function': f.parse(),
+            }))
+        else:
+            commands.append(draw_polynomial(f.parse()))
 
     try:
         for c in commands:
