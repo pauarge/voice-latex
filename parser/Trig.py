@@ -2,7 +2,7 @@ class Trig:
     def __init__(self, op, var, power):
         self.op = op
         self.var = var
-        if power == 'squared':
+        if power == 'square':
             self.power = 2
         elif power == 'cube':
             self.power = 3
@@ -13,4 +13,4 @@ class Trig:
         if self.power > 1:
             return '\{}^{}({})'.format(self.op, self.power, self.var)
         else:
-            return '\{}^{}({})'.format(self.op, self.power, self.var)
+            return '\{}({})'.format(self.op, self.var)

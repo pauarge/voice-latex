@@ -10,12 +10,19 @@ def draw_polynomial(data):
 def draw_integral(data, fn, render=True):
     x = Symbol('x')
     if render:
-        equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
-        return NoEscape('\\begin{{equation}}{}\\end{{equation}}'.format(latex(equation)))
+        if data.get('lower_bound') and data.get('upper_bound'):
+            equation = Integral(fn, (x, data.get('lower_bound'), data.get('upper_bound')))
+            return NoEscape('\\begin{{equation}}{}\\end{{equation}}'.format(latex(equation)))
+        else:
+            return NoEscape('\\begin{{equation}}int {} dx\\end{{equation}}'.format(latex(fn)))
     else:
-        return NoEscape('\\begin{{equation}}\int_{{{}}}^{{{}}} {} dx\\end{{equation}}'.format(data.get('lower_bound'),
-                                                                                              data.get('upper_bound'),
-                                                                                              fn))
+        if data.get('lower_bound') and data.get('upper_bound'):
+            return NoEscape(
+                '\\begin{{equation}}\int_{{{}}}^{{{}}} {} dx\\end{{equation}}'.format(data.get('lower_bound'),
+                                                                                      data.get('upper_bound'),
+                                                                                      fn))
+        else:
+            return NoEscape('\\begin{{equation}}\int {} dx\\end{{equation}}'.format(fn))
 
 
 def draw_derivative(data, fn, render=True):
